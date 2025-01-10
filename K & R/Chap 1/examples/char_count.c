@@ -34,3 +34,4 @@ int main (){
         printf("Characters: %1d",nc);
     }
 }
+

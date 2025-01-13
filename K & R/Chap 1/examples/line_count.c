@@ -1,21 +1,18 @@
+//Line Counting
 #include <stdio.h>
 
+/* Count lines in input */
 int main(){
+        int c, n1;
 
-    char result[10];
-    char name;
 
-    name = getchar();
+        n1 = 0;
+        while ((c = getchar() != EOF))
+        {
+            if (c == '\n')
+                ++n1;
 
-    printf("What is your name? ");
-
-    while (getchar() != EOF){
-        result[10] = putchar(name);
-
-        printf("My name is result %s", result);
-    }
-    
-
-    return 0;
-    
+        printf("%d\n ", n1);
+            
+        }
 }

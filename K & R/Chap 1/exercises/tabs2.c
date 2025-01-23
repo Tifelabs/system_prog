@@ -7,25 +7,20 @@ unambiaguous way.
 #include <stdio.h>
 
 int main() {
-
     int c;
-    int output;
-
-    c = getchar();          //To get user-input
-    output = putchar;      //User Output
-
-    while(c != EOF){
-        c == output;
-
+    while((c == getchar()) != EOF) {
         if(c == '\t'){
-            puts('\t');
+            putchar('\\');
+            putchar('t');
+        }else if (c == '\b'){
+            putchar('\\');
+            putchar('\\');
+        }else{
+            putchar(c);
         }
-
-        else if (c == '\\')
-        {
-            puts('\\');
-        }
-        
     }
     return 0;
 }
+
+
+

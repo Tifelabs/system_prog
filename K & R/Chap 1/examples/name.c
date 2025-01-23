@@ -1,5 +1,6 @@
-//Line Counting
-//Program that counts input lines
+/* Line Counting
+Program that counts input lines */
+
 #include <stdio.h>
 
 /* Count Lines in Input */

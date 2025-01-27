@@ -2,16 +2,23 @@
 
 int main() {
     int c;
+    int in_word = 0;
+
     while ((c = getchar()) != EOF) {
-        if (c == '\t') {
-            putchar('\\');
-            putchar('t');
-        } else if (c == '\b') { // Handles backspace character
-            putchar('\\');
-            putchar('\\');
+        if (c == ' ' || c == '\t' || c == '\n') {
+            if (in_word) {
+                putchar('\n');
+                in_word = 0;
+            }
         } else {
             putchar(c);
+            in_word = 1;
         }
     }
+
+    if (in_word) {
+        putchar('\n');
+    }
+
     return 0;
 }

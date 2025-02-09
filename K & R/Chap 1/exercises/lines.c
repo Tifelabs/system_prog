@@ -12,7 +12,7 @@ int main()
 	while(1) {
 		printf("Enter a  line: ")
 		fgets(line, MAXLINE,stdin);
-		line [strcspn(line , "\n")] =  0; remove newline character
+		line [strcspn(line , "\n")] =  0;//remove newline character
 
 		if (strlen(line) > MAXLINE  - 1) {
 			pritnf("%s\n", line);

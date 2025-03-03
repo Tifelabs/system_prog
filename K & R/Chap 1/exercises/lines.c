@@ -2,25 +2,23 @@
 //characters
 
 #include <stdio.h>
+#include <string.h>
 
-#define MAXLINE 81
+#define MAXLINE 1000 // Bigger buffer to catch lines > 80 chars
+#define THRESHOLD 80 // Lines longer than this get printed
 
-int main() 
-	{
-	char line[MAXLINE];
+int main() {
+    char line[MAXLINE];
 
-	while(1) {
-		printf("Enter a  line: ")
-		fgets(line, MAXLINE,stdin);
-		line [strcspn(line , "\n")] =  0;//remove newline character
+    printf("Enter lines (Ctrl+D or Ctrl+Z to stop):\n");
 
-		if (strlen(line) > MAXLINE  - 1) {
-			pritnf("%s\n", line);
-		}
+    while (fgets(line, MAXLINE, stdin) != NULL) {
+        line[strcspn(line, "\n")] = 0; // Remove newline
 
-		//Check for  EOF
-		if (feof(stdin)) break;
-	}
-	return 0; 
+        if (strlen(line) > THRESHOLD) {
+            printf("%s\n", line);
+        }
+    }
 
+    return 0;
 }

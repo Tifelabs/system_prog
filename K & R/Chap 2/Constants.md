@@ -12,3 +12,12 @@
 - **\t**     horizontal tab
 - **\v**     vertical tab
 
+- **\\**     backslash
+- **\?**     question mark
+- **\'**     single quote
+- **\"**     double quote
+- **\000**   octal number
+- **\xhh**   hexadecimal number
+
+
+

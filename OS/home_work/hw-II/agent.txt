@@ -1,0 +1,2 @@
+Message from CHILD process
+Message from PARENT process

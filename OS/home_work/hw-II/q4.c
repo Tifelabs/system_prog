@@ -26,7 +26,6 @@ int main(int argc, char *argv[]){
         exit(1);
     } else if(rc == 0){
         printf("Child (PID:%d)\n", (int) getpid());
-    }else{
         char *prog_path[] = {"/bin/ls", NULL};
 
         switch (variant){
@@ -37,12 +36,35 @@ int main(int argc, char *argv[]){
         
         case 2:
             printf("USING evecvp()");
-            execvp()
-        
-        default:
+            char *myargs_vp[] = {"ls", "-l", NULL};
+            execvp(myargs_vp[0], myargs_vp);
             break;
+        
+        case 3:
+            printf("USING execle()\n");
+            execle("/bin/ls", "ls", "-l", NULL, prog_path);
+            break;
+        
+        case 4:
+            printf("USING execlp()\n");
+            execlp("ls", "ls", "-l", NULL);
+            break;
+
+        case 5:
+            printf("USING execv()\n");
+            char *myargs_cv[] = {"ls", "-l", NULL};
+            execv("/bin/ls", myargs_cv);
+            break;
+
+        default:
+            fprintf(stderr, "INVALID VARIANT, Use 1-5\n");
+            exit(1);
         }
     }
-
-    return 0;
-}
+        else{
+        /* PARENT process */
+        wait(NULL);
+        printf("\nParent (PID:%d) - Child completed\n", (int) getpid());
+        }
+        return 0;
+    }

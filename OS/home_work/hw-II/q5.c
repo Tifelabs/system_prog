@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+
 int main(int argc, char *argv[]){
 
     printf("\nMain process (PID:%d)\n", (int) getpid());
@@ -19,9 +20,19 @@ int main(int argc, char *argv[]){
     } else if(rc == 0){
         /* New Child Process */
         printf("\nChild Process (PID:%d)\n", (int) getpid());
+        printf("Child process calling wait()\n");
+        int child_wait = wait(NULL);
+        printf("\nChild Process After Wait() returns:[%d]\n", child_wait);
+        sleep(2);
+        printf("Child Process Finished\n\n");
     } else{
-        wait(NULL);
         /* Parent Process */
         printf("\nParent Process (PID:%d)\n", (int) getpid());
+        printf("\nParent process calling wait\n");
+        int parent_wait = wait(NULL);
+        printf("Parent Process After wait() returns:[%d]\n", parent_wait);
+        sleep(3);
+        printf("Parent Process Finished\n");
     }
+    return 0;
 }

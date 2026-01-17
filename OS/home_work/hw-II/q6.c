@@ -9,25 +9,37 @@
 #include <sys/types.h>
 
 int main(int argc, char *argv[]){
-    int status;
-    printf("Main Process (PID:%d)\n", (int) getpid());
+    printf("\t\t[ --> WAITPID() ADVANTAGES <-- ]\n\n");
 
-    int rc = fork();
+    printf("PRO 1: Waiting for a specific child\n\n");
+    int first_child = fork();
+    int second_child;
     
-    if(rc < 0){
-        fprintf(stderr, "Fork Failed\n");
-        exit(1);
-    }else if(rc == 0){
-        printf("Child Process (PID:%d)\n",(int)getpid());
-        sleep(2);
-        printf("**** CHILD PROCESS FINISHED ****\n");
-    } else{
-        printf("Parent Process (PID:%d)\n", (int) getpid());
-        printf("Parent process Calling waitpid()\n\n");
-        int parent_waitpid = waitpid(-1, &status, WCONTINUED);
-        printf("Parent proc after Waitpid() (PID:%d) returns [%d]\n",(int) getpid(), parent_waitpid);        
+    if(first_child == 0){
+        printf("FIRST CHILD (PID:%d)\n",(int)getpid());
         sleep(3);
-        printf("**** CHILD PROCESS FINISHED ****\n");
+        printf("**** FIRST CHILD PROCESS FINISHED ****\n");
+        exit(1);
+    } 
+
+    second_child = fork();
+    if(second_child == 0){
+        printf("SECOND CHILD (PID:%d)\n", (int) getpid());
+        sleep(2);
+        printf("**** SECOND CHILD PROCESS FINISHED ****\n");
+        exit(2);
     }
-       return 0;
+
+    /* Parent waiting for second_child first despite first_child was created first */
+    printf("PARENT :: WAITING FOR SECOND_CHILD (PID:%d)...\n", second_child);
+    int status;
+    waitpid(second_child, &status, 0);
+    printf("PARENT --> Second Child Finished with status %d\n\n", WEXITSTATUS(status));
+    
+    /* Waiting for First Child */
+    printf("PARENT :: WAITING FOR FIRST_CHILD (PID:%d)...\n", first_child);
+    waitpid(first_child, &status, 0);
+    printf("PARENT --> First Child Finished with status %d\n\n", WEXITSTATUS(status));
+
+    return 0;
 }

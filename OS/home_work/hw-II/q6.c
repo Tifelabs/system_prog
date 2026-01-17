@@ -40,6 +40,32 @@ int main(int argc, char *argv[]){
     printf("PARENT :: WAITING FOR FIRST_CHILD (PID:%d)...\n", first_child);
     waitpid(first_child, &status, 0);
     printf("PARENT --> First Child Finished with status %d\n\n", WEXITSTATUS(status));
+    
+    printf("PRO 2: Non-blocking with WNOHANG\n\n");
+    int third_child = fork();
+
+    if(third_child == 0){
+        sleep(2);
+        exit(0);
+    }
+
+    /* Check if child is done without blocking */
+    int result = waitpid(third_child, &status, WNOHANG);
+    if(result == 0){
+        printf("PARENT: Child still in progress (non-blocking check)\n");
+    }
+    printf("Parent: Running other jobs....\n");
+    sleep(1);
+
+    /* Checking again */
+    result = waitpid(third_child, &status, WNOHANG);
+    if(result == 0){
+        printf("PARENT: Child still in progress......(not finished)-- (non-blocking check)\n");
+    }
+
+    /* Finally Wait blocking */
+    waitpid(third_child, &status, WNOHANG);
+    printf("**** PARENT :: THIRD CHILD PROCESS FINISHED ****\n");
 
     return 0;
 }
